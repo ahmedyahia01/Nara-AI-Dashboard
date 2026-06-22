@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", "Tajawal", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Premium Bento Design Brand Colors */
+  --color-canvas-light: #F3F4F6;
+  --color-canvas-dark: #E5E7EB;
+  --color-surface: #FDFBF7;
+  --color-surface-hover: #F5EBE0;
+  --color-charcoal: #212529;
+  --color-slate-text: #2D3748;
+  --color-navy: #0A192F;
+  --color-navy-light: #1E3A8A;
+  --color-gold: #D4AF37;
+  --color-gold-hover: #B58921;
+
+  --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-up {
+    from { transform: translateY(10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+}
+
+/* Base custom resets and scrollbar styling */
+html {
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-canvas-light);
+  color: var(--color-charcoal);
+}
+
+/* Glassmorphism Classes styled for Bento Gold */
+.glass-panel {
+  background: rgba(253, 251, 247, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.glass-panel-dark {
+  background: rgba(10, 25, 47, 0.98);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+/* Bento Grid custom utility classes for absolute layout symmetry */
+.bento-card {
+  background-color: #FDFBF7;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 1.5rem; /* rounded-3xl */
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-card:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 10px 15px -3px rgba(10, 25, 47, 0.05), 0 4px 6px -4px rgba(10, 25, 47, 0.05);
+}
+
+.bento-card-dark {
+  background-color: #0A192F;
+  color: #ffffff;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 1.5rem; /* rounded-3xl */
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px -5px rgba(10, 25, 47, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-card-dark:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 20px 30px -10px rgba(10, 25, 47, 0.4);
+}
+
+.bento-card-dashed {
+  background-color: #FDFBF7;
+  border: 2px dashed rgba(212, 175, 55, 0.35);
+  border-radius: 1.5rem; /* rounded-3xl */
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-card-dashed:hover {
+  border-color: var(--color-gold);
+  background-color: #F5EBE0;
+}
+
+/* Premium Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 25, 47, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(10, 25, 47, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* Markdown styling inside chat client */
+.prose-rtl {
+  direction: rtl;
+}
+
+.prose-rtl p {
+  margin-bottom: 0.75rem;
+  line-height: 1.75;
+}
+
+.prose-rtl strong {
+  color: var(--color-navy);
+  font-weight: 700;
+}
+
+.prose-rtl ul, .prose-rtl ol {
+  margin-right: 1.5rem;
+  margin-bottom: 0.75rem;
+  list-style-type: decimal;
+}
+
+.prose-rtl ul {
+  list-style-type: disc;
+}
+
+.prose-rtl pre {
+  background-color: #1a202c;
+  color: #edf2f7;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  direction: ltr;
+  text-align: left;
+}
+
+.prose-rtl code {
+  font-family: var(--font-mono);
+  background-color: rgba(10, 25, 47, 0.06);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.prose-rtl pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.85rem;
+}

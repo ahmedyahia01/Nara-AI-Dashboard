@@ -1,0 +1,6 @@
+{
+  "name": "لوحة إنتاجية نارا الذكية",
+  "description": "منصة شاملة لإنتاجية الذكاء الاصطناعي مدعومة بنماذج NaraRouter لمعالجة النصوص، تحليل ملفات PDF العملاقة، تصميم الشرائح التقديمية الفورية، الفحص الذكي للصور وكود الواجهات، ومراجعة الأكواد البرمجية.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
