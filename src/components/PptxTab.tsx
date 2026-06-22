@@ -76,7 +76,7 @@ Do not return any conversational text. Generate exactly ${slideCount} slides cov
 
     await executeStream(
       {
-        model: 'claude-sonnet-4.6', // Ideal model for high-fidelity structures and JSON mapping
+        model: 'deepseek-3.2', // Ideal model for high-fidelity structures and JSON mapping
         messages: [
           { role: 'system', content: systemPromptText },
           { role: 'user', content: `الموضوع الأساسي المراد تصميمه وبنائه بـ ${slideCount} شرائح هو: ${promptText}` }
