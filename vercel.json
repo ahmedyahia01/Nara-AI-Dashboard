@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/naraya/:path*",
+      "destination": "https://router.naraya.ai/:path*"
+    }
+  ]
+}
