@@ -1,20 +1,24 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Nara-Al-Dashboard: AI-to-PPTX Professional Studio
 
-# Run and deploy your AI Studio app
+Welcome to the Nara-Al-Dashboard, an advanced cloud-based AI studio designed to transform ideas, business strategies, and concepts into professional, presentation-ready PowerPoint files in seconds.
 
-This contains everything you need to run your app locally.
+## 🔗 Live Application
 
-View your app in AI Studio: https://ai.studio/apps/e2339255-2d0b-44c2-b820-3ebd5a9eedae
+Access the platform directly here:
+`[https://nara-ai-dashboard.vercel.app/](https://nara-ai-dashboard.vercel.app/)`
 
-## Run Locally
+## 🚀 Key Features
 
-**Prerequisites:**  Node.js
+* **Intelligent AI Engine:** Powered by state-of-the-art models to ensure precise, deep, and structured content outlines.
+* **Instant Export (AI-to-PPTX):** Seamlessly converts AI-generated content into fully formatted, ready-to-present PowerPoint files (16:9).
+* **Corporate Standard Design:** Integrated visual system following the "Nara" branding identity, featuring a professional Navy Blue & Gold palette with full RTL support for high-quality Arabic presentations.
+* **Structured Precision:** Optimized data matrices that organize slide titles, subtitles, and concise bullet points to deliver impactful and professional narratives.
 
+## 🔑 API Configuration
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+To unlock the full generation capabilities of the dashboard, an API key is required.
+
+1. Visit the API provider to create your account:
+`[https://router.naraya.ai/keys](https://router.naraya.ai/keys)`
+2. Upon account registration, the platform grants **5 million free tokens** to utilize within the dashboard.
+3. Configure your API key in the application settings to begin generating your presentations.
