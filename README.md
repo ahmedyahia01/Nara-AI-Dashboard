@@ -7,8 +7,10 @@ Welcome to the Nara-Al-Dashboard, an advanced cloud-based AI studio designed to 
 ## 🔗 Live Application
 
 Access the platform directly here:
+
+(https://router.naraya.ai/keys]
+
 `[https://nara-ai-dashboard.vercel.app/]
-(https://nara-ai-dashboard.vercel.app/)`
 
 ## 🚀 Key Features
 
