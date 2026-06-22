@@ -5,7 +5,7 @@
 
 import { ModelOption } from '../types';
 
-export const API_BASE_URL = 'https://router.naraya.ai/v1/chat/completions';
+export const API_BASE_URL = '/api/naraya/v1/chat/completions';
 
 // Premium Model Configuration Matrix
 export const AVAILABLE_MODELS: ModelOption[] = [
