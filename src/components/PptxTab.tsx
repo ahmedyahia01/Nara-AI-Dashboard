@@ -127,13 +127,14 @@ Do not return any conversational text. Generate exactly ${slideCount} slides cov
         // 1. Sleek Background Canvas (Warm Off-White Surface Color)
         slide.background = { fill: 'FDFBF7' };
 
-        // 2. Decorative Top Corporate Bar (Deep Navy Blue)
-        slide.addRect({
-          x: 0,
-          y: 0,
-          w: '100%',
-          h: 0.4,
-          fill: { color: '0A192F' }
+       // 2. Decorative Top Corporate Bar (Deep Navy Blue)
+slide.addShape(pptx.ShapeType.rect, {
+  x: 0,
+  y: 0,
+  w: '100%',
+  h: 0.4,
+  fill: { color: '0A192F' }
+
         });
 
         // 3. Top Right Branding/Tracker Indicator (Gold accent!)
