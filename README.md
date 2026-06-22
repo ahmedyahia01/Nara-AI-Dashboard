@@ -1,3 +1,5 @@
+<img width="1888" height="883" alt="61360037-03b736dd1eeb31be7c2c7304822d8db5" src="https://github.com/user-attachments/assets/d8b4843d-7b44-4520-9448-0a2ae96a141a" />
+
 # Nara-Al-Dashboard: AI-to-PPTX Professional Studio
 
 Welcome to the Nara-Al-Dashboard, an advanced cloud-based AI studio designed to transform ideas, business strategies, and concepts into professional, presentation-ready PowerPoint files in seconds.
