@@ -326,9 +326,27 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
     try {
       const globalMarked = (window as any).marked;
       if (globalMarked && typeof globalMarked.parse === 'function') {
-        return { __html: globalMarked.parse(text) };
+        const renderer = new globalMarked.Renderer();
+        renderer.code = (codeText: string, infoString: string) => {
+          const lang = infoString || 'code';
+          const cleanCode = typeof codeText === 'object' ? (codeText as any).text : codeText;
+          const escapedCode = encodeURIComponent(cleanCode);
+          return `
+<div class="code-block-wrapper my-4 rounded-2xl overflow-hidden border border-[#D4AF37]/25 bg-[#0A111E] text-right font-mono shadow-md" dir="ltr">
+  <div class="code-block-header flex items-center justify-between bg-[#111928] px-4 py-2 border-b border-[#D4AF37]/15 select-none" dir="rtl">
+    <span class="text-[10px] font-black text-[#D4AF37] font-sans tracking-wider uppercase">${lang}</span>
+    <button onclick="navigator.clipboard.writeText(decodeURIComponent('${escapedCode}')); this.innerHTML='<span class=\'text-emerald-400 font-bold\'>✓ تم النسخ</span>'; setTimeout(() => this.innerHTML='<span>نسخ الكود</span>', 2000);" class="text-[10px] font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer bg-white/5 px-2.5 py-1 rounded-lg border border-[#D4AF37]/10 font-sans">
+      <span>نسخ الكود</span>
+    </button>
+  </div>
+  <pre class="p-4 m-0 overflow-x-auto text-[12px] leading-relaxed text-[#E2E8F0] bg-transparent text-left font-mono"><code>${globalMarked.escape ? globalMarked.escape(cleanCode) : cleanCode.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
+</div>`;
+        };
+        return { __html: globalMarked.parse(text, { renderer }) };
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
     return { __html: text.replace(/\n/g, '<br />') };
   };
 
@@ -560,7 +578,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
                 disabled={isAnswering || !inputQuestion.trim()}
                 className="p-3 bg-navy hover:bg-[#1E3A8A] text-[#D4AF37] hover:text-white rounded-xl transition-all shadow-md disabled:bg-slate-100 disabled:text-slate-400 cursor-pointer border border-[#D4AF37]/35"
               >
-                <Send className="w-4.5 h-4.5 transform rotate-180" />
+                <Send className="w-4.5 h-4.5 transform -scale-x-100 transition-transform duration-200" />
               </button>
             </form>
           </div>

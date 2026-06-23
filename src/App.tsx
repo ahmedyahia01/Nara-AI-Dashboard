@@ -18,7 +18,8 @@ import {
   X,
   Clock,
   ExternalLink,
-  Table
+  Table,
+  Menu
 } from 'lucide-react';
 
 import { TabId } from './types';
@@ -35,6 +36,7 @@ import { SettingsTab } from './components/SettingsTab';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('chat');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [hasApiKey, setHasApiKey] = useState(false);
   const [rateLimitCountdown, setRateLimitCountdown] = useState(0);
   const [currentTime, setCurrentTime] = useState<string>('');
@@ -86,27 +88,50 @@ export default function App() {
   return (
     <div className="h-full flex flex-col md:flex-row bg-[#F3F4F6]" id="app-workspace">
       
+      {/* Semi-transparent Backdrop Overlay for Mobile Drawer */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-[1.5px] z-30 md:hidden animate-fade-in" 
+          onClick={() => setIsSidebarOpen(false)} 
+        />
+      )}
+
       {/* Sidebar Control Panel */}
-      <aside className="w-full md:w-64 bg-[#0A192F] text-[#FDFBF7] shrink-0 border-l border-[#D4AF37]/30 shadow-2xl flex flex-col justify-between p-6 md:h-screen sticky top-0 md:sticky z-10" id="sidebar-panel">
+      <aside 
+        className={`fixed md:sticky top-0 right-0 h-screen w-64 bg-[#0A192F] text-[#FDFBF7] shrink-0 border-l border-[#D4AF37]/30 shadow-2xl flex flex-col justify-between p-6 z-40 transition-transform duration-300 ease-in-out md:translate-x-0 ${
+          isSidebarOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'
+        }`} 
+        id="sidebar-panel"
+      >
         <div className="space-y-6">
           
           {/* Brand Logo & Name */}
-          <div className="flex items-center gap-3 border-b border-[#D4AF37]/25 pb-4">
-            <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center text-[#0A192F] shadow-[0_0_15px_rgba(212,175,55,0.35)] shrink-0 transform rotate-3 hover:rotate-0 transition-all duration-300">
-              <svg className="w-6 h-6 text-[#0A192F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-              </svg>
+          <div className="flex items-center justify-between border-b border-[#D4AF37]/25 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center text-[#0A192F] shadow-[0_0_15px_rgba(212,175,55,0.35)] shrink-0 transform rotate-3 hover:rotate-0 transition-all duration-300">
+                <svg className="w-6 h-6 text-[#0A192F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-base font-black text-white tracking-tight">بوابة نارا الذكية</h1>
+                <p className="text-[10px] text-[#D4AF37] uppercase tracking-widest opacity-80 font-bold">Nara Router Workspace</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-base font-black text-white tracking-tight">بوابة نارا الذكية</h1>
-              <p className="text-[10px] text-[#D4AF37] uppercase tracking-widest opacity-80 font-bold">Nara Router Workspace</p>
-            </div>
+            {/* Mobile close button inside drawer */}
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="md:hidden p-1.5 text-white/60 hover:text-white hover:bg-white/10 rounded-xl transition-all cursor-pointer"
+              title="إغلاق القائمة"
+            >
+              <X className="w-5 h-5 text-[#D4AF37]" />
+            </button>
           </div>
 
           {/* Core Sidebar tab triggers - Bento Navigation Pattern */}
           <nav className="space-y-3" id="nav-rail">
             <button
-              onClick={() => setActiveTab('chat')}
+              onClick={() => { setActiveTab('chat'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 p-3 transition-all cursor-pointer ${
                 activeTab === 'chat' 
                   ? 'bg-white/10 border-r-4 border-[#D4AF37] rounded-l-md text-white font-bold' 
@@ -118,7 +143,7 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('pdf')}
+              onClick={() => { setActiveTab('pdf'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 p-3 transition-all cursor-pointer ${
                 activeTab === 'pdf' 
                   ? 'bg-white/10 border-r-4 border-[#D4AF37] rounded-l-md text-white font-bold' 
@@ -130,7 +155,7 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('literature')}
+              onClick={() => { setActiveTab('literature'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 p-3 transition-all cursor-pointer ${
                 activeTab === 'literature' 
                   ? 'bg-white/10 border-r-4 border-[#D4AF37] rounded-l-md text-white font-bold' 
@@ -142,7 +167,7 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('pptx')}
+              onClick={() => { setActiveTab('pptx'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 p-3 transition-all cursor-pointer ${
                 activeTab === 'pptx' 
                   ? 'bg-white/10 border-r-4 border-[#D4AF37] rounded-l-md text-white font-bold' 
@@ -154,7 +179,7 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('vision')}
+              onClick={() => { setActiveTab('vision'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 p-3 transition-all cursor-pointer ${
                 activeTab === 'vision' 
                   ? 'bg-white/10 border-r-4 border-[#D4AF37] rounded-l-md text-white font-bold' 
@@ -166,7 +191,7 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('code')}
+              onClick={() => { setActiveTab('code'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 p-3 transition-all cursor-pointer ${
                 activeTab === 'code' 
                   ? 'bg-white/10 border-r-4 border-[#D4AF37] rounded-l-md text-white font-bold' 
@@ -180,7 +205,7 @@ export default function App() {
             <div className="border-t border-white/10 my-4 pt-4" />
 
             <button
-              onClick={() => setActiveTab('settings')}
+              onClick={() => { setActiveTab('settings'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 p-3 transition-all cursor-pointer ${
                 activeTab === 'settings' 
                   ? 'bg-white/10 border-r-4 border-[#D4AF37] rounded-l-md text-white font-bold' 
@@ -226,15 +251,22 @@ export default function App() {
       </aside>
 
       {/* Main Container Viewport Content */}
-      <main className="flex-1 flex flex-col p-6 space-y-4 h-screen overflow-hidden bg-[#F3F4F6]" id="main-panel">
+      <main className="flex-1 flex flex-col p-4 md:p-6 space-y-4 h-screen overflow-hidden bg-[#F3F4F6]" id="main-panel">
         
         {/* Dynamic Toolbar Header */}
-        <header className="bg-[#FDFBF7] p-4 rounded-2xl border border-[#D4AF37]/20 shadow-sm flex items-center justify-between shrink-0" id="header-toolbar">
+        <header className="bg-[#FDFBF7] p-4 rounded-2xl border border-[#D4AF37]/20 shadow-sm flex items-center justify-between shrink-0 gap-4" id="header-toolbar">
           
           {/* Page/Tab Title identifier */}
-          <div>
-            <h2 className="text-sm md:text-base font-extrabold text-[#0A192F] flex items-center gap-2">
-              <span className="text-[#D4AF37]">✦</span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="p-2 border border-[#D4AF37]/25 rounded-xl bg-white text-navy hover:bg-[#F5EBE0]/40 md:hidden transition-all duration-200 cursor-pointer shadow-sm shrink-0"
+              title="فتح القائمة الجانبية"
+            >
+              <Menu className="w-5 h-5 text-navy" />
+            </button>
+            <h2 className="text-xs sm:text-sm md:text-base font-extrabold text-[#0A192F] flex items-center gap-1 sm:gap-2">
+              <span className="text-[#D4AF37] hidden xs:inline">✦</span>
               {activeTab === 'chat' && <>المحادثة متعددة النماذج</>}
               {activeTab === 'pdf' && <>محلل وقارئ ملفات الـ PDF الشاهقة</>}
               {activeTab === 'literature' && <>مصفوفة الدراسات السابقة ومراجعة الأدبيات</>}
