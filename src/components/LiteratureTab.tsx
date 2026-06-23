@@ -133,6 +133,30 @@ ${s.text}
 ---`;
     }).join('\n\n');
 
+    let accumulatedText = '';
+    let lastUpdateTime = 0;
+    let throttleTimeout: any = null;
+
+    const updateState = (force = false) => {
+      const now = Date.now();
+      if (force || now - lastUpdateTime >= 60) {
+        setMatrixResult(accumulatedText);
+        lastUpdateTime = now;
+        if (throttleTimeout) {
+          clearTimeout(throttleTimeout);
+          throttleTimeout = null;
+        }
+      } else {
+        if (!throttleTimeout) {
+          throttleTimeout = setTimeout(() => {
+            setMatrixResult(accumulatedText);
+            lastUpdateTime = Date.now();
+            throttleTimeout = null;
+          }, 60 - (now - lastUpdateTime));
+        }
+      }
+    };
+
     try {
       await executeStream(
         {
@@ -144,9 +168,13 @@ ${s.text}
           temperature: 0.3
         },
         (chunk) => {
-          setMatrixResult(prev => prev + chunk);
+          accumulatedText += chunk;
+          updateState();
         },
         () => {
+          if (throttleTimeout) {
+            clearTimeout(throttleTimeout);
+          }
           setIsLoading(false);
         },
         (errType, errMsg) => {
@@ -172,18 +200,35 @@ ${s.text}
       if (globalMarked && typeof globalMarked.parse === 'function') {
         const renderer = new globalMarked.Renderer();
         renderer.code = (codeText: string, infoString: string) => {
-          const lang = infoString || 'code';
+          const lang = (infoString || 'code').trim().toLowerCase();
           const cleanCode = typeof codeText === 'object' ? (codeText as any).text : codeText;
           const escapedCode = encodeURIComponent(cleanCode);
+          
+          let highlighted = '';
+          const prism = (window as any).Prism;
+          if (prism && prism.languages[lang]) {
+            try {
+              highlighted = prism.highlight(cleanCode, prism.languages[lang], lang);
+            } catch (e) {
+              highlighted = '';
+            }
+          }
+          
+          if (!highlighted) {
+            highlighted = globalMarked.escape 
+              ? globalMarked.escape(cleanCode) 
+              : cleanCode.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          }
+
           return `
-<div class="code-block-wrapper my-4 rounded-2xl overflow-hidden border border-[#D4AF37]/25 bg-[#0A111E] text-right font-mono shadow-md" dir="ltr">
+<div class="code-block-wrapper my-4 rounded-2xl overflow-hidden border border-[#D4AF37]/20 bg-[#0A111E] text-right font-mono shadow-md" dir="ltr">
   <div class="code-block-header flex items-center justify-between bg-[#111928] px-4 py-2 border-b border-[#D4AF37]/15 select-none" dir="rtl">
     <span class="text-[10px] font-black text-[#D4AF37] font-sans tracking-wider uppercase">${lang}</span>
-    <button onclick="navigator.clipboard.writeText(decodeURIComponent('${escapedCode}')); this.innerHTML='<span class=\'text-emerald-400 font-bold\'>✓ تم النسخ</span>'; setTimeout(() => this.innerHTML='<span>نسخ الكود</span>', 2000);" class="text-[10px] font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer bg-white/5 px-2.5 py-1 rounded-lg border border-[#D4AF37]/10 font-sans">
+    <button onclick="window.naraCopyText('${escapedCode}', this)" class="text-[10px] font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 cursor-pointer bg-white/5 px-2.5 py-1 rounded-lg border border-[#D4AF37]/10 font-sans">
       <span>نسخ الكود</span>
     </button>
   </div>
-  <pre class="p-4 m-0 overflow-x-auto text-[12px] leading-relaxed text-[#E2E8F0] bg-transparent text-left font-mono"><code>${globalMarked.escape ? globalMarked.escape(cleanCode) : cleanCode.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
+  <pre class="p-4 m-0 overflow-x-auto text-[12px] leading-relaxed text-[#E2E8F0] bg-transparent text-left font-mono"><code class="language-${lang}">${highlighted}</code></pre>
 </div>`;
         };
         return { __html: globalMarked.parse(text, { renderer }) };

@@ -21,6 +21,71 @@
 
     <!-- PptxGenJS for programmatically designing client-side PowerPoint files -->
     <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+
+    <!-- PrismJS Premium Syntax Highlighting CSS and JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+
+    <!-- Secure Cross-Iframe Clipboard Copying Utility with Visual Feedback -->
+    <script>
+      window.naraCopyText = function(encodedText, button) {
+        const text = decodeURIComponent(encodedText);
+        let success = false;
+        
+        // Attempt navigator.clipboard
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text)
+            .then(() => {
+              showSuccess();
+            })
+            .catch(() => {
+              fallbackCopy();
+            });
+        } else {
+          fallbackCopy();
+        }
+
+        function fallbackCopy() {
+          const textArea = document.createElement('textarea');
+          textArea.value = text;
+          textArea.style.position = 'fixed';
+          textArea.style.top = '0';
+          textArea.style.left = '0';
+          textArea.style.opacity = '0';
+          textArea.style.pointerEvents = 'none';
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          try {
+            const successful = document.execCommand('copy');
+            if (successful) showSuccess();
+          } catch (err) {
+            console.error('Fallback copy failed:', err);
+          }
+          document.body.removeChild(textArea);
+        }
+
+        function showSuccess() {
+          if (!button) return;
+          const originalHTML = button.innerHTML;
+          button.innerHTML = '<span class="text-emerald-400 font-bold flex items-center gap-1">✓ تم النسخ!</span>';
+          button.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+          button.style.backgroundColor = 'rgba(16, 185, 129, 0.1)';
+          setTimeout(() => {
+            button.innerHTML = originalHTML;
+            button.style.borderColor = '';
+            button.style.backgroundColor = '';
+          }, 2000);
+        }
+      };
+    </script>
   </head>
   <body class="h-full antialiased text-[#212529]">
     <div id="root" class="h-full"></div>
