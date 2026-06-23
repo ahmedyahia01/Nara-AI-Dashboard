@@ -159,40 +159,64 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
     setIsAnswering(true);
     setLiveAnswer('');
 
-    await executeStream(
-      {
-        model: 'qwen3.7-max-naraya', // Leverage the massive 1 Million Token window
-        messages: [
-          { role: 'system', content: 'أنت مستشار قراءة عميقة متمرس في تحليل المستندات وتحرير مقتطفات البيانات الفائقة.' },
-          { role: 'user', content: targetPrompt }
-        ]
-      },
-      (chunk) => {
-        setLiveAnswer(prev => prev + chunk);
-      },
-      (fullText) => {
-        const assistantMsg: ChatMessage = {
-          id: `p-${Date.now()}-answer`,
-          role: 'assistant',
-          content: fullText,
-          timestamp: new Date(),
-          modelUsed: 'qwen3.7-max-naraya'
-        };
-        setChatHistory([...newHistory, assistantMsg]);
-        setLiveAnswer('');
-        setIsAnswering(false);
-        setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
-      },
-      (errType, errMsg) => {
-        setIsAnswering(false);
-        setLiveAnswer('');
-        if (errType === 'ratelimit') {
-          onRateLimit(60);
-        } else {
-          onErrorToast(errMsg);
+    try {
+      await executeStream(
+        {
+          model: 'qwen3.7-max-naraya', // Leverage the massive 1 Million Token window
+          messages: [
+            { role: 'system', content: 'أنت مستشار قراءة عميقة متمرس في تحليل المستندات وتحرير مقتطفات البيانات الفائقة.' },
+            { role: 'user', content: targetPrompt }
+          ]
+        },
+        (chunk) => {
+          setLiveAnswer(prev => prev + chunk);
+        },
+        (fullText) => {
+          const assistantMsg: ChatMessage = {
+            id: `p-${Date.now()}-answer`,
+            role: 'assistant',
+            content: fullText,
+            timestamp: new Date(),
+            modelUsed: 'qwen3.7-max-naraya'
+          };
+          setChatHistory([...newHistory, assistantMsg]);
+          setLiveAnswer('');
+          setIsAnswering(false);
+          setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+        },
+        (errType, errMsg) => {
+          setIsAnswering(false);
+          setLiveAnswer('');
+          const errorMsg: ChatMessage = {
+            id: `p-${Date.now()}-err`,
+            role: 'assistant',
+            content: `⚠️ **حدث خطأ أثناء معالجة المستند والاستعلام من الخادم.**\n\n*تفاصيل الخطأ:* ${errMsg}`,
+            timestamp: new Date(),
+            modelUsed: 'qwen3.7-max-naraya'
+          };
+          setChatHistory([...newHistory, errorMsg]);
+          setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+          if (errType === 'ratelimit') {
+            onRateLimit(60);
+          } else {
+            onErrorToast(errMsg);
+          }
         }
-      }
-    );
+      );
+    } catch (error: any) {
+      setIsAnswering(false);
+      setLiveAnswer('');
+      const errorMsg: ChatMessage = {
+        id: `p-${Date.now()}-err`,
+        role: 'assistant',
+        content: `⚠️ **حدث خطأ غير متوقع أثناء معالجة المستند والاستعلام من الخادم.**\n\n*تفاصيل الخطأ:* ${error.message || error}`,
+        timestamp: new Date(),
+        modelUsed: 'qwen3.7-max-naraya'
+      };
+      setChatHistory([...newHistory, errorMsg]);
+      setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+      onErrorToast(error.message || 'Network Error');
+    }
   };
 
   const submitCustomQuestion = async (e: React.FormEvent) => {
@@ -222,37 +246,66 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
       ...updatedMsgs.slice(-6).map(m => ({ role: m.role, content: m.content }))
     ];
 
-    await executeStream(
-      {
-        model: 'qwen3.7-max-naraya',
-        messages: formattedMessages
-      },
-      (chunk) => {
-        setLiveAnswer(prev => prev + chunk);
-      },
-      (fullText) => {
-        const assistantMsg: ChatMessage = {
-          id: `p-${Date.now()}-a`,
-          role: 'assistant',
-          content: fullText,
-          timestamp: new Date(),
-          modelUsed: 'qwen3.7-max-naraya'
-        };
-        setChatHistory([...updatedMsgs, assistantMsg]);
-        setLiveAnswer('');
-        setIsAnswering(false);
-        setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
-      },
-      (errType, errMsg) => {
-        setIsAnswering(false);
-        setLiveAnswer('');
-        if (errType === 'ratelimit') {
-          onRateLimit(60);
-        } else {
-          onErrorToast(errMsg);
+    try {
+      await executeStream(
+        {
+          model: 'qwen3.7-max-naraya',
+          messages: formattedMessages
+        },
+        (chunk) => {
+          setLiveAnswer(prev => prev + chunk);
+        },
+        (fullText) => {
+          const assistantMsg: ChatMessage = {
+            id: `p-${Date.now()}-a`,
+            role: 'assistant',
+            content: fullText,
+            timestamp: new Date(),
+            modelUsed: 'qwen3.7-max-naraya'
+          };
+          setChatHistory([...updatedMsgs, assistantMsg]);
+          setLiveAnswer('');
+          setIsAnswering(false);
+          setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+        },
+        (errType, errMsg) => {
+          setIsAnswering(false);
+          setLiveAnswer('');
+
+          // Append a structured, user-friendly error block inside the PDF chat history
+          const errorContent = `⚠️ **حدث خطأ أثناء معالجة المستند والاستعلام من الخادم.**\n\n*تفاصيل الخطأ:* ${errMsg}`;
+          const assistantErrorMsg: ChatMessage = {
+            id: `p-${Date.now()}-err`,
+            role: 'assistant',
+            content: errorContent,
+            timestamp: new Date(),
+            modelUsed: 'qwen3.7-max-naraya'
+          };
+          setChatHistory([...updatedMsgs, assistantErrorMsg]);
+          setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+
+          if (errType === 'ratelimit') {
+            onRateLimit(60);
+          } else {
+            onErrorToast(errMsg);
+          }
         }
-      }
-    );
+      );
+    } catch (error: any) {
+      setIsAnswering(false);
+      setLiveAnswer('');
+      const errorContent = `⚠️ **حدث خطأ غير متوقع أثناء معالجة المستند والاستعلام من الخادم.**\n\n*تفاصيل الخطأ:* ${error.message || error}`;
+      const assistantErrorMsg: ChatMessage = {
+        id: `p-${Date.now()}-err`,
+        role: 'assistant',
+        content: errorContent,
+        timestamp: new Date(),
+        modelUsed: 'qwen3.7-max-naraya'
+      };
+      setChatHistory([...updatedMsgs, assistantErrorMsg]);
+      setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+      onErrorToast(error.message || 'Network Error');
+    }
   };
 
   const handleCopyText = (text: string, id: string) => {

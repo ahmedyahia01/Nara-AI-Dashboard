@@ -115,6 +115,7 @@ export const VisionTab: React.FC<VisionTabProps> = ({ onErrorToast, onRateLimit 
       },
       (errType, errMsg) => {
         setIsLoading(false);
+        setAnalysisResult(`⚠️ **حدث خطأ أثناء الاتصال بالخادم ومعالجة الصورة:**\n\n${errMsg}`);
         if (errType === 'ratelimit') {
           onRateLimit(60);
         } else {

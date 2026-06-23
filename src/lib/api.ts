@@ -5,7 +5,7 @@
 
 import { ModelOption } from '../types';
 
-export const API_BASE_URL = '/api/naraya/v1/chat/completions';
+export const API_BASE_URL = '/api/v1/chat/completions';
 
 // Premium Model Configuration Matrix
 export const AVAILABLE_MODELS: ModelOption[] = [
@@ -90,31 +90,44 @@ export async function executeStream(
   }
 
   try {
+    // Making a direct, uncached CORS connection to bypass any intermediate proxy or middleware blocks
     const response = await fetch(API_BASE_URL, {
       method: 'POST',
+      mode: 'cors',
+      cache: 'no-store',
+      credentials: 'omit',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        'Authorization': `Bearer ${apiKey}`,
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
       },
       body: JSON.stringify({
         ...payload,
+        reasoning_effort: 'medium',
         stream: true
       })
     });
 
-    if (response.status === 401) {
-      onError('unauthorized', 'مفتاح الـ API غير صالح (401 Unauthorized). يرجى التأكد من الرموز المدخلة.');
-      return;
-    }
-
-    if (response.status === 429) {
-      onError('ratelimit', 'تم تجاوز معدل الاستهلاك الأقصى (429 Rate Limited). جاري فرض فترة تبريد لحماية خوادم NaraRouter.');
-      return;
-    }
-
     if (!response.ok) {
       const errText = await response.text();
-      onError('error', `فشل الاتصال بالبوابة الإلكترونية: ${response.status} - ${errText || response.statusText}`);
+      let extractedMessage = '';
+      try {
+        const errJson = JSON.parse(errText);
+        if (errJson?.error?.message) {
+          extractedMessage = errJson.error.message;
+        }
+      } catch (e) {}
+
+      const displayMsg = extractedMessage || `فشل الاتصال بالبوابة الإلكترونية: ${response.status} - ${errText || response.statusText}`;
+
+      if (response.status === 429) {
+        onError('ratelimit', displayMsg);
+      } else if (response.status === 401) {
+        onError('unauthorized', displayMsg);
+      } else {
+        onError('error', displayMsg);
+      }
       return;
     }
 

@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/naraya/:path*",
-      "destination": "https://router.naraya.ai/:path*"
+      "source": "/api/:path*",
+      "destination": "https://router.bynara.id/:path*"
     }
   ]
 }

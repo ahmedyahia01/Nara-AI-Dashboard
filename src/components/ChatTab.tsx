@@ -117,38 +117,69 @@ export const ChatTab: React.FC<ChatTabProps> = ({ onErrorToast, onRateLimit }) =
       ...updated.map(m => ({ role: m.role, content: m.content }))
     ];
 
-    await executeStream(
-      {
-        model: selectedModel,
-        messages: payloadMessages
-      },
-      (chunk) => {
-        setStreamingMessage(prev => prev + chunk);
-      },
-      (fullText) => {
-        const assistantMsg: ChatMessage = {
-          id: `m-${Date.now()}-a`,
-          role: 'assistant',
-          content: fullText,
-          timestamp: new Date(),
-          modelUsed: selectedModel
-        };
-        const finalMsgs = [...updated, assistantMsg];
-        setMessages(finalMsgs);
-        saveChatHistory(finalMsgs);
-        setStreamingMessage('');
-        setIsStreaming(false);
-      },
-      (errType, errMsg) => {
-        setIsStreaming(false);
-        setStreamingMessage('');
-        if (errType === 'ratelimit') {
-          onRateLimit(60);
-        } else {
-          onErrorToast(errMsg);
+    try {
+      await executeStream(
+        {
+          model: selectedModel,
+          messages: payloadMessages
+        },
+        (chunk) => {
+          setStreamingMessage(prev => prev + chunk);
+        },
+        (fullText) => {
+          const assistantMsg: ChatMessage = {
+            id: `m-${Date.now()}-a`,
+            role: 'assistant',
+            content: fullText,
+            timestamp: new Date(),
+            modelUsed: selectedModel
+          };
+          const finalMsgs = [...updated, assistantMsg];
+          setMessages(finalMsgs);
+          saveChatHistory(finalMsgs);
+          setStreamingMessage('');
+          setIsStreaming(false);
+        },
+        (errType, errMsg) => {
+          setIsStreaming(false);
+          setStreamingMessage('');
+          
+          // Create a dedicated error response bubble so the user has immediate visual feedback inline
+          const errorContent = `⚠️ **حدث خطأ أثناء الاتصال بالخادم، يرجى المحاولة لاحقاً.**\n\n*تفاصيل الاستجابة:* ${errMsg}`;
+          const assistantErrorMsg: ChatMessage = {
+            id: `m-${Date.now()}-err`,
+            role: 'assistant',
+            content: errorContent,
+            timestamp: new Date(),
+            modelUsed: selectedModel
+          };
+          const finalMsgs = [...updated, assistantErrorMsg];
+          setMessages(finalMsgs);
+          saveChatHistory(finalMsgs);
+
+          if (errType === 'ratelimit') {
+            onRateLimit(60);
+          } else {
+            onErrorToast(errMsg);
+          }
         }
-      }
-    );
+      );
+    } catch (error: any) {
+      setIsStreaming(false);
+      setStreamingMessage('');
+      const errorContent = `⚠️ **حدث خطأ غير متوقع بالشبكة أثناء محاولة التوجيه.**\n\n*تفاصيل الخطأ:* ${error.message || error}`;
+      const assistantErrorMsg: ChatMessage = {
+        id: `m-${Date.now()}-err`,
+        role: 'assistant',
+        content: errorContent,
+        timestamp: new Date(),
+        modelUsed: selectedModel
+      };
+      const finalMsgs = [...updated, assistantErrorMsg];
+      setMessages(finalMsgs);
+      saveChatHistory(finalMsgs);
+      onErrorToast(error.message || 'Network Error');
+    }
   };
 
   const renderMarkdown = (text: string) => {
@@ -329,6 +360,24 @@ export const ChatTab: React.FC<ChatTabProps> = ({ onErrorToast, onRateLimit }) =
             </div>
           </div>
         ))}
+
+        {/* Active Thinking State */}
+        {isStreaming && !streamingMessage && (
+          <div className="flex gap-3 max-w-4xl ml-auto animate-slide-up" id="thinking-node">
+            <div className="w-8 h-8 rounded-lg shrink-0 flex items-center justify-center text-xs font-bold bg-navy text-gold shadow-sm animate-pulse">
+              <Cpu className="w-4 h-4 text-gold" />
+            </div>
+            <div className="space-y-1.5 flex-1">
+              <div className="p-4 bg-[#FDFBF7]/60 border border-[#D4AF37]/20 text-slate-500 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2">
+                <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-gold"></span>
+                </span>
+                <span className="text-xs font-medium animate-pulse">جاري الاتصال بـ NaraRouter وتوليد الرد...</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Live Stream visualizer node */}
         {streamingMessage && (

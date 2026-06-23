@@ -82,6 +82,7 @@ export const CodeTab: React.FC<CodeTabProps> = ({ onErrorToast, onRateLimit }) =
       },
       (errType, errMsg) => {
         setIsLoading(false);
+        setOptimizedCode(`⚠️ **حدث خطأ أثناء الاتصال بالخادم وتحسين الشفرة البرمجية:**\n\n${errMsg}`);
         if (errType === 'ratelimit') {
           onRateLimit(60);
         } else {
