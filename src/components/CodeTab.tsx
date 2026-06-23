@@ -65,13 +65,13 @@ export const CodeTab: React.FC<CodeTabProps> = ({ onErrorToast, onRateLimit }) =
     }
 
     const payloadMessages = [
-      { role: 'system', content: 'أنت مهندس فني خارق من شركة نارا لتعديل الأكواد البرمجية (Claude 4.6 Engine). أنت مبرمج ممتاز، تكتب أكواداً ذكية فائقة الجودة منسقة بأقصى درجات المهنية والصواب مع إقصاء تام للأخطاء النحوية للغات.' },
+      { role: 'system', content: 'أنت مهندس فني خارق من شركة نارا لتعديل الأكواد البرمجية (Claude 4.5 Engine). أنت مبرمج ممتاز، تكتب أكواداً ذكية فائقة الجودة منسقة بأقصى درجات المهنية والصواب مع إقصاء تام للأخطاء النحوية للغات.' },
       { role: 'user', content: `${requestPrompt}\n\nكود المصدر البرمجي المدخل ومحتواه:\n\n\`\`\`\n${rawContent}\n\`\`\`` }
     ];
 
     await executeStream(
       {
-        model: 'claude-sonnet-4.6', // Ideal model for code manipulation and technical logical transformations
+        model: 'claude-sonnet-4.5', // Ideal model for code manipulation and technical logical transformations
         messages: payloadMessages
       },
       (chunk) => {

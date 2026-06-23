@@ -12,50 +12,50 @@ export const AVAILABLE_MODELS: ModelOption[] = [
   {
     id: 'deepseek-3.2',
     name: 'deepseek-3.2',
-    arabicName: 'ديب سيك 3.2 - المنطق السريع',
+    arabicName: 'دييب سيك 3.2 - المنطق السريع',
     description: 'خيار استثنائي للمحادثات العامة، والاستجابات البرمجية والنقاشات السريعة خفيفة الوزن.',
     badge: 'سريع',
     maxTokensText: '8K'
   },
   {
-    id: 'mistral-large',
-    name: 'mistral-large',
-    arabicName: 'ميسترال لارج - الفهم المتقدم',
-    description: 'نموذج أوروبي متطور يتميز بدقة البناء اللغوي والقدرات المنطقية المتينة لشتى الأغراض العامة.',
-    badge: 'رائد',
-    maxTokensText: '32K'
-  },
-  {
-    id: 'qwen3.7-max-naraya',
-    name: 'qwen3.7-max-naraya',
-    arabicName: 'كوين 3.7 - معالج المستندات المليونية',
-    description: 'نموذج مخصص ذو سياق استثنائي يبلغ (1 مليون توكن) يجعله الأفضل عالمياً للقراءة العميقة وتلخيص ملفات الـ PDF الشاهقة.',
-    badge: 'سياق ضخم',
-    maxTokensText: '1M'
+    id: 'claude-sonnet-4.5',
+    name: 'claude-sonnet-4.5',
+    arabicName: 'كلود سونيت 4.5 - التحليل المتقدم',
+    description: 'تحليل دلالي عميق وفهم سياقي متقدم وصياغة كود فائقة الجودة.',
+    badge: 'ذكي',
+    maxTokensText: '200K'
   },
   {
     id: 'claude-haiku-4.5',
     name: 'claude-haiku-4.5',
-    arabicName: 'كلود هايكو 4.5 - الرؤية السريعة والـ OCR',
+    arabicName: 'كلود هايكو 4.5 - الرؤية السريعة',
     description: 'معالجة بصرية خارقة وفهم للصور واستخلاص النصوص الـ OCR وتخطيط واجهات الاستخدام بكفاءة وسرعة فائقة.',
     badge: 'رؤية',
     maxTokensText: '16K'
   },
   {
-    id: 'minimax-m3',
-    name: 'minimax-m3',
-    arabicName: 'ميني ماكس M3 - معزز الوسائط المتعددة',
-    description: 'نموذج رؤية بديل ذو دقة عالية في تفسير الرسوم البيانية، المليء بالصور والجداول المعقدة والتحليل الهيكلي للواجهات.',
-    badge: 'رؤية',
-    maxTokensText: '16K'
+    id: 'mistral-large',
+    name: 'mistral-large',
+    arabicName: 'ميسترال لارج - الفهم المعقد',
+    description: 'نموذج أوروبي متطور يتميز بدقة البناء اللغوي والقدرات المنطقية المتينة لشتى الأغراض العامة.',
+    badge: 'رائد',
+    maxTokensText: '32K'
   },
   {
-    id: 'claude-sonnet-4.6',
-    name: 'claude-sonnet-4.6',
-    arabicName: 'كلود سونيت 4.6 - المنطق الفائق وهندسة الكود',
-    description: 'النموذج الأقوى على الإطلاق لمعالجة الأكواد وهيكلتها، والتفكير الرياضي الخالص، وتوليد واجهات الاستخدام بتناسق لامتناهي.',
-    badge: 'ذكي',
-    maxTokensText: '128K'
+    id: 'mistral-medium-3-5',
+    name: 'mistral-medium-3-5',
+    arabicName: 'ميسترال ميديام 3.5 - الرؤية المتوازنة',
+    description: 'معالجة بصرية رائعة وفهم متوازن وسريع للمستندات متعددة الوسائط والرسوم البيانية.',
+    badge: 'رؤية',
+    maxTokensText: '32K'
+  },
+  {
+    id: 'glm-5',
+    name: 'glm-5',
+    arabicName: 'جي إل إم 5 - المهام العامة',
+    description: 'نموذج متعدد الاستخدامات مميز في المهام اليومية السريعة والمعالجة المتوازنة.',
+    badge: 'رائد',
+    maxTokensText: '16K'
   }
 ];
 

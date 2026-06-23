@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-export type TabId = 'chat' | 'pdf' | 'pptx' | 'vision' | 'code' | 'settings';
+export type TabId = 'chat' | 'pdf' | 'literature' | 'pptx' | 'vision' | 'code' | 'settings';
 
 export interface ModelOption {
   id: string;

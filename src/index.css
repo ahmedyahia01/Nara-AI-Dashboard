@@ -171,3 +171,41 @@ body {
   border-radius: 0;
   font-size: 0.85rem;
 }
+
+/* Table Markdown Styling */
+.prose-rtl table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+  text-align: right;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.prose-rtl th {
+  background-color: var(--color-navy);
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--color-gold);
+  font-size: 0.875rem;
+}
+
+.prose-rtl td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  background-color: #FDFBF7;
+  color: var(--color-slate-text);
+  line-height: 1.6;
+}
+
+.prose-rtl tr:nth-child(even) td {
+  background-color: rgba(245, 235, 224, 0.25);
+}
+
+.prose-rtl tr:hover td {
+  background-color: rgba(212, 175, 55, 0.05);
+}

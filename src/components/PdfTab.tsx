@@ -162,7 +162,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
     try {
       await executeStream(
         {
-          model: 'qwen3.7-max-naraya', // Leverage the massive 1 Million Token window
+          model: 'claude-sonnet-4.5', // Leverage the massive 200k Token window
           messages: [
             { role: 'system', content: 'أنت مستشار قراءة عميقة متمرس في تحليل المستندات وتحرير مقتطفات البيانات الفائقة.' },
             { role: 'user', content: targetPrompt }
@@ -177,7 +177,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
             role: 'assistant',
             content: fullText,
             timestamp: new Date(),
-            modelUsed: 'qwen3.7-max-naraya'
+            modelUsed: 'claude-sonnet-4.5'
           };
           setChatHistory([...newHistory, assistantMsg]);
           setLiveAnswer('');
@@ -192,7 +192,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
             role: 'assistant',
             content: `⚠️ **حدث خطأ أثناء معالجة المستند والاستعلام من الخادم.**\n\n*تفاصيل الخطأ:* ${errMsg}`,
             timestamp: new Date(),
-            modelUsed: 'qwen3.7-max-naraya'
+            modelUsed: 'claude-sonnet-4.5'
           };
           setChatHistory([...newHistory, errorMsg]);
           setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -211,7 +211,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
         role: 'assistant',
         content: `⚠️ **حدث خطأ غير متوقع أثناء معالجة المستند والاستعلام من الخادم.**\n\n*تفاصيل الخطأ:* ${error.message || error}`,
         timestamp: new Date(),
-        modelUsed: 'qwen3.7-max-naraya'
+        modelUsed: 'claude-sonnet-4.5'
       };
       setChatHistory([...newHistory, errorMsg]);
       setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -249,7 +249,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
     try {
       await executeStream(
         {
-          model: 'qwen3.7-max-naraya',
+          model: 'claude-sonnet-4.5',
           messages: formattedMessages
         },
         (chunk) => {
@@ -261,7 +261,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
             role: 'assistant',
             content: fullText,
             timestamp: new Date(),
-            modelUsed: 'qwen3.7-max-naraya'
+            modelUsed: 'claude-sonnet-4.5'
           };
           setChatHistory([...updatedMsgs, assistantMsg]);
           setLiveAnswer('');
@@ -279,7 +279,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
             role: 'assistant',
             content: errorContent,
             timestamp: new Date(),
-            modelUsed: 'qwen3.7-max-naraya'
+            modelUsed: 'claude-sonnet-4.5'
           };
           setChatHistory([...updatedMsgs, assistantErrorMsg]);
           setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -300,7 +300,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
         role: 'assistant',
         content: errorContent,
         timestamp: new Date(),
-        modelUsed: 'qwen3.7-max-naraya'
+        modelUsed: 'claude-sonnet-4.5'
       };
       setChatHistory([...updatedMsgs, assistantErrorMsg]);
       setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -378,7 +378,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
               </div>
               <div className="max-w-md bg-gold/5 text-gold-hover border border-gold/15 px-4 py-3 rounded-2xl text-[11px] leading-relaxed flex items-center gap-2">
                 <FileText className="w-4 h-4 shrink-0 text-[#B58921]" />
-                <span>يتم التوجيه حصراً لمعالج <strong>qwen3.7-max-naraya</strong> الذي يتفوق بنافذة سياق عملاقة تلتهم <strong>1,000,000 كلمة</strong> للـ RAG الحقيقي والذكي.</span>
+                <span>يتم التوجيه حصراً لمعالج <strong>claude-sonnet-4.5</strong> الذي يتفوق بنافذة سياق عملاقة تلتهم <strong>200,000 كلمة</strong> للـ RAG الحقيقي والذكي.</span>
               </div>
             </>
           )}

@@ -17,7 +17,8 @@ import {
   AlertCircle,
   X,
   Clock,
-  ExternalLink
+  ExternalLink,
+  Table
 } from 'lucide-react';
 
 import { TabId } from './types';
@@ -26,6 +27,7 @@ import { getStoredApiKey } from './lib/api';
 // Component Module import statements
 import { ChatTab } from './components/ChatTab';
 import { PdfTab } from './components/PdfTab';
+import { LiteratureTab } from './components/LiteratureTab';
 import { PptxTab } from './components/PptxTab';
 import { VisionTab } from './components/VisionTab';
 import { CodeTab } from './components/CodeTab';
@@ -128,6 +130,18 @@ export default function App() {
             </button>
 
             <button
+              onClick={() => setActiveTab('literature')}
+              className={`w-full flex items-center gap-3 p-3 transition-all cursor-pointer ${
+                activeTab === 'literature' 
+                  ? 'bg-white/10 border-r-4 border-[#D4AF37] rounded-l-md text-white font-bold' 
+                  : 'text-white/60 hover:bg-white/5 rounded-md text-right'
+              }`}
+            >
+              <Table className="w-5 h-5 shrink-0 text-[#D4AF37]" />
+              <span className="text-xs font-semibold">مصفوفة الدراسات السابقة</span>
+            </button>
+
+            <button
               onClick={() => setActiveTab('pptx')}
               className={`w-full flex items-center gap-3 p-3 transition-all cursor-pointer ${
                 activeTab === 'pptx' 
@@ -223,6 +237,7 @@ export default function App() {
               <span className="text-[#D4AF37]">✦</span>
               {activeTab === 'chat' && <>المحادثة متعددة النماذج</>}
               {activeTab === 'pdf' && <>محلل وقارئ ملفات الـ PDF الشاهقة</>}
+              {activeTab === 'literature' && <>مصفوفة الدراسات السابقة ومراجعة الأدبيات</>}
               {activeTab === 'pptx' && <>مهندس عروض الـ PowerPoint المتناسقة</>}
               {activeTab === 'vision' && <>فاحص الصور واستوديو الواجهات</>}
               {activeTab === 'code' && <>مراجع كود المصدر والمطوّر الفني</>}
@@ -237,7 +252,7 @@ export default function App() {
             <div className="hidden lg:flex items-center gap-4 text-right">
               <div className="flex flex-col">
                 <span className="text-[9px] text-gray-400 uppercase font-bold tracking-wider">النموذج الافتراضي</span>
-                <span className="text-[11px] font-extrabold text-[#0A192F]">Qwen-3.7-Max (1M Context)</span>
+                <span className="text-[11px] font-extrabold text-[#0A192F]">Claude-Sonnet-4.5 (200K)</span>
               </div>
               <div className="h-8 w-[1px] bg-gray-200"></div>
               <div className="flex flex-col">
@@ -299,6 +314,13 @@ export default function App() {
 
           {activeTab === 'pdf' && (
             <PdfTab 
+              onErrorToast={triggerToast} 
+              onRateLimit={handleRateLimitBlock} 
+            />
+          )}
+
+          {activeTab === 'literature' && (
+            <LiteratureTab 
               onErrorToast={triggerToast} 
               onRateLimit={handleRateLimitBlock} 
             />
