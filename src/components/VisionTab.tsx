@@ -15,7 +15,7 @@ interface VisionTabProps {
 }
 
 export const VisionTab: React.FC<VisionTabProps> = ({ onErrorToast, onRateLimit }) => {
-  const [selectedModel, setSelectedModel] = useState('claude-haiku-4.5');
+  const [selectedModel, setSelectedModel] = useState('mimo-v2.5-free');
   const [visionMode, setVisionMode] = useState<VisionMode>('describe');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageRawBase64, setImageRawBase64] = useState<string | null>(null);
@@ -296,8 +296,10 @@ export const VisionTab: React.FC<VisionTabProps> = ({ onErrorToast, onRateLimit 
                 onChange={(e) => setSelectedModel(e.target.value)}
                 className="bg-white border border-[#D4AF37]/25 rounded-xl pr-2.5 pl-8 py-1.5 text-xs text-navy font-bold focus:outline-none focus:ring-1 focus:ring-[#D4AF37] appearance-none cursor-pointer"
               >
-                <option value="claude-haiku-4.5">Claude Haiku 4.5 (سريع)</option>
-                <option value="minimax-m3">Minimax M3 Unified (دقيق)</option>
+                <option value="mimo-v2.5-pro-free">ميمو برو 2.5 - التحليل المتقدم</option>
+                <option value="mistral-large">ميسترال لارج - النصوص المعقدة (32K)</option>
+                <option value="mistral-medium-3-5">ميسترال ميديام 3.5 - الرؤية المتوازنة (32K)</option>
+                <option value="mimo-v2.5-free">ميمو 2.5 - الرؤية السريعة</option>
               </select>
             </div>
           </div>

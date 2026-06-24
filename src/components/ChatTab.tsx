@@ -41,7 +41,7 @@ interface ChatTabProps {
 }
 
 export const ChatTab: React.FC<ChatTabProps> = ({ onErrorToast, onRateLimit }) => {
-  const [selectedModel, setSelectedModel] = useState('deepseek-3.2');
+  const [selectedModel, setSelectedModel] = useState('mistral-large');
   const [activePrompt, setActivePrompt] = useState('general');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');

@@ -10,51 +10,35 @@ export const API_BASE_URL = '/api/v1/chat/completions';
 // Premium Model Configuration Matrix
 export const AVAILABLE_MODELS: ModelOption[] = [
   {
-    id: 'deepseek-3.2',
-    name: 'deepseek-3.2',
-    arabicName: 'دييب سيك 3.2 - المنطق السريع',
-    description: 'خيار استثنائي للمحادثات العامة، والاستجابات البرمجية والنقاشات السريعة خفيفة الوزن.',
-    badge: 'سريع',
-    maxTokensText: '8K'
-  },
-  {
-    id: 'claude-sonnet-4.5',
-    name: 'claude-sonnet-4.5',
-    arabicName: 'كلود سونيت 4.5 - التحليل المتقدم',
-    description: 'تحليل دلالي عميق وفهم سياقي متقدم وصياغة كود فائقة الجودة.',
-    badge: 'ذكي',
-    maxTokensText: '200K'
-  },
-  {
-    id: 'claude-haiku-4.5',
-    name: 'claude-haiku-4.5',
-    arabicName: 'كلود هايكو 4.5 - الرؤية السريعة',
-    description: 'معالجة بصرية خارقة وفهم للصور واستخلاص النصوص الـ OCR وتخطيط واجهات الاستخدام بكفاءة وسرعة فائقة.',
-    badge: 'رؤية',
-    maxTokensText: '16K'
-  },
-  {
     id: 'mistral-large',
     name: 'mistral-large',
-    arabicName: 'ميسترال لارج - الفهم المعقد',
+    arabicName: 'ميسترال لارج - النصوص المعقدة (32K)',
     description: 'نموذج أوروبي متطور يتميز بدقة البناء اللغوي والقدرات المنطقية المتينة لشتى الأغراض العامة.',
     badge: 'رائد',
     maxTokensText: '32K'
   },
   {
+    id: 'mimo-v2.5-pro-free',
+    name: 'mimo-v2.5-pro-free',
+    arabicName: 'ميمو برو 2.5 - التحليل المتقدم',
+    description: 'تحليل دلالي عميق وفهم سياقي متقدم وصياغة كود فائقة الجودة.',
+    badge: 'ذكي',
+    maxTokensText: '32K'
+  },
+  {
     id: 'mistral-medium-3-5',
     name: 'mistral-medium-3-5',
-    arabicName: 'ميسترال ميديام 3.5 - الرؤية المتوازنة',
+    arabicName: 'ميسترال ميديام 3.5 - الرؤية المتوازنة (32K)',
     description: 'معالجة بصرية رائعة وفهم متوازن وسريع للمستندات متعددة الوسائط والرسوم البيانية.',
     badge: 'رؤية',
     maxTokensText: '32K'
   },
   {
-    id: 'glm-5',
-    name: 'glm-5',
-    arabicName: 'جي إل إم 5 - المهام العامة',
-    description: 'نموذج متعدد الاستخدامات مميز في المهام اليومية السريعة والمعالجة المتوازنة.',
-    badge: 'رائد',
+    id: 'mimo-v2.5-free',
+    name: 'mimo-v2.5-free',
+    arabicName: 'ميمو 2.5 - الرؤية السريعة',
+    description: 'معالجة بصرية خارقة وفهم للصور واستخلاص النصوص الـ OCR وتخطيط واجهات الاستخدام بكفاءة وسرعة فائقة.',
+    badge: 'سريع',
     maxTokensText: '16K'
   }
 ];

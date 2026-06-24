@@ -186,7 +186,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
     try {
       await executeStream(
         {
-          model: 'claude-sonnet-4.5', // Leverage the massive 200k Token window
+          model: 'mimo-v2.5-pro-free', // Leverage the massive 200k Token window
           messages: [
             { role: 'system', content: 'أنت مستشار قراءة عميقة متمرس في تحليل المستندات وتحرير مقتطفات البيانات الفائقة.' },
             { role: 'user', content: targetPrompt }
@@ -205,7 +205,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
             role: 'assistant',
             content: fullText,
             timestamp: new Date(),
-            modelUsed: 'claude-sonnet-4.5'
+            modelUsed: 'mimo-v2.5-pro-free'
           };
           setChatHistory([...newHistory, assistantMsg]);
           setLiveAnswer('');
@@ -220,7 +220,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
             role: 'assistant',
             content: `⚠️ **حدث خطأ أثناء معالجة المستند والاستعلام من الخادم.**\n\n*تفاصيل الخطأ:* ${errMsg}`,
             timestamp: new Date(),
-            modelUsed: 'claude-sonnet-4.5'
+            modelUsed: 'mimo-v2.5-pro-free'
           };
           setChatHistory([...newHistory, errorMsg]);
           setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -239,7 +239,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
         role: 'assistant',
         content: `⚠️ **حدث خطأ غير متوقع أثناء معالجة المستند والاستعلام من الخادم.**\n\n*تفاصيل الخطأ:* ${error.message || error}`,
         timestamp: new Date(),
-        modelUsed: 'claude-sonnet-4.5'
+        modelUsed: 'mimo-v2.5-pro-free'
       };
       setChatHistory([...newHistory, errorMsg]);
       setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -301,7 +301,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
     try {
       await executeStream(
         {
-          model: 'claude-sonnet-4.5',
+          model: 'mimo-v2.5-pro-free',
           messages: formattedMessages
         },
         (chunk) => {
@@ -317,7 +317,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
             role: 'assistant',
             content: fullText,
             timestamp: new Date(),
-            modelUsed: 'claude-sonnet-4.5'
+            modelUsed: 'mimo-v2.5-pro-free'
           };
           setChatHistory([...updatedMsgs, assistantMsg]);
           setLiveAnswer('');
@@ -335,7 +335,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
             role: 'assistant',
             content: errorContent,
             timestamp: new Date(),
-            modelUsed: 'claude-sonnet-4.5'
+            modelUsed: 'mimo-v2.5-pro-free'
           };
           setChatHistory([...updatedMsgs, assistantErrorMsg]);
           setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -356,7 +356,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
         role: 'assistant',
         content: errorContent,
         timestamp: new Date(),
-        modelUsed: 'claude-sonnet-4.5'
+        modelUsed: 'mimo-v2.5-pro-free'
       };
       setChatHistory([...updatedMsgs, assistantErrorMsg]);
       setTimeout(() => chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
@@ -469,7 +469,7 @@ export const PdfTab: React.FC<PdfTabProps> = ({ onErrorToast, onRateLimit }) => 
               </div>
               <div className="max-w-md bg-gold/5 text-gold-hover border border-gold/15 px-4 py-3 rounded-2xl text-[11px] leading-relaxed flex items-center gap-2">
                 <FileText className="w-4 h-4 shrink-0 text-[#B58921]" />
-                <span>يتم التوجيه حصراً لمعالج <strong>claude-sonnet-4.5</strong> الذي يتفوق بنافذة سياق عملاقة تلتهم <strong>200,000 كلمة</strong> للـ RAG الحقيقي والذكي.</span>
+                <span>يتم التوجيه حصراً لمعالج <strong>mimo-v2.5-pro-free</strong> الذي يتفوق بنافذة سياق عملاقة تلتهم <strong>العديد من الكلمات</strong> للـ RAG الحقيقي والذكي.</span>
               </div>
             </>
           )}

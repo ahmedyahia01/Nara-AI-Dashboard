@@ -49,7 +49,7 @@ const PRESET_STUDIES: ResearchStudy[] = [
 
 export const LiteratureTab: React.FC<LiteratureTabProps> = ({ onErrorToast, onRateLimit }) => {
   const [studies, setStudies] = useState<ResearchStudy[]>(PRESET_STUDIES);
-  const [selectedModel, setSelectedModel] = useState('claude-sonnet-4.5');
+  const [selectedModel, setSelectedModel] = useState('mimo-v2.5-pro-free');
   const [isLoading, setIsLoading] = useState(false);
   const [matrixResult, setMatrixResult] = useState('');
   const [copied, setCopied] = useState(false);
@@ -358,9 +358,10 @@ ${s.text}
                 onChange={(e) => setSelectedModel(e.target.value)}
                 className="px-2.5 py-1 text-xs bg-[#FDFBF7] border border-[#D4AF37]/25 rounded-lg text-navy font-bold focus:outline-none focus:border-gold cursor-pointer"
               >
-                <option value="claude-sonnet-4.5">كلود سونيت 4.5 - التحليل المتقدم</option>
-                <option value="mistral-large">ميسترال لارج - الفهم المعقد</option>
-                <option value="deepseek-3.2">دييب سيك 3.2 - المنطق السريع</option>
+                <option value="mimo-v2.5-pro-free">ميمو برو 2.5 - التحليل المتقدم</option>
+                <option value="mistral-large">ميسترال لارج - النصوص المعقدة (32K)</option>
+                <option value="mistral-medium-3-5">ميسترال ميديام 3.5 - الرؤية المتوازنة (32K)</option>
+                <option value="mimo-v2.5-free">ميمو 2.5 - الرؤية السريعة</option>
               </select>
             </div>
 

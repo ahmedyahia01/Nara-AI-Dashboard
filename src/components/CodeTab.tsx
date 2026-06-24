@@ -95,7 +95,7 @@ export const CodeTab: React.FC<CodeTabProps> = ({ onErrorToast, onRateLimit }) =
 
     await executeStream(
       {
-        model: 'claude-sonnet-4.5', // Ideal model for code manipulation and technical logical transformations
+        model: 'mimo-v2.5-pro-free', // Ideal model for code manipulation and technical logical transformations
         messages: payloadMessages
       },
       (chunk) => {
